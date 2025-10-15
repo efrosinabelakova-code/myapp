@@ -14,8 +14,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -46,17 +44,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install buildozer Cython setuptools
         
-    - name: Configure Buildozer
-      run: |
-        buildozer init
-        # Упрощаем требования для первой сборки
-        sed -i 's/requirements = .*/requirements = python3,kivy/' buildozer.spec
-        sed -i 's/android.arch = .*/android.arch = arm64-v8a/' buildozer.spec
-        
     - name: Build APK with Buildozer
       run: |
         buildozer -v android debug
-        ls -la bin/
         
     - name: Upload APK artifact
       if: success()
