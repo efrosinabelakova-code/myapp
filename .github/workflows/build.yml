@@ -46,7 +46,7 @@ jobs:
         
     - name: Build APK with Buildozer
       run: |
-        buildozer -v android debug
+        buildozer -v android debug --dir /home/runner/work/myapp/myapp
         
     - name: Upload APK artifact
       if: success()
